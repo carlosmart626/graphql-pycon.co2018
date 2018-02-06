@@ -7,9 +7,13 @@ Automat==0.6.0
 channels==1.1.8
 constantly==15.1.0
 daphne==1.4.2
+django-filter==1.1.0
+django-jwt-auth==0.0.2
 Django==2.0.2
-graphene==2.0.1
+git+https://github.com/CarlosMart626/graphql-ws.git@master#egg=graphql-ws
+git+https://github.com/CarlosMart626/django-graph-auth.git@master#egg=django-graph-auth
 graphene-django==2.0.0
+graphene==2.0.1
 graphql-core==2.0
 graphql-relay==0.4.5
 hyperlink==17.3.1
@@ -31,5 +35,3 @@ txaio==2.8.2
 typing==3.6.2
 wrapt==1.10.11
 zope.interface==4.4.3
-git+https://github.com/CarlosMart626/graphql-ws.git@master#egg=graphql-ws
-django-filter==1.1.0

@@ -1,10 +1,16 @@
 import graphene
+import graph_auth.schema
+
 from graphene import relay
 from rx import Observable
+from django.contrib.auth.models import User
 from graphene_django.filter import DjangoFilterConnectionField
+from graphene_django.debug import DjangoDebug
+
 from courses.schemas import CourseNode
 from profiles.schemas import ProfileNode, UserNode
-from django.contrib.auth.models import User
+from profiles.mutations import UpdateProfile
+from courses.mutations import CreateCourse, UpdateCourse
 
 
 class Query(graphene.ObjectType):
@@ -17,6 +23,12 @@ class Query(graphene.ObjectType):
 
     def resolve_hello(self, info, **kwargs):
         return 'world'
+
+
+class Mutations(graphene.ObjectType):
+    create_course = CreateCourse.Field()
+    update_course = UpdateCourse.Field()
+    update_profile = UpdateProfile.Field()
 
 
 class Subscription(graphene.ObjectType):
@@ -41,4 +53,20 @@ class Subscription(graphene.ObjectType):
             .share()
 
 
-schema = graphene.Schema(query=Query, subscription=Subscription)
+schema = graphene.Schema(query=Query, mutation=Mutations, subscription=Subscription)
+
+
+class Query(graph_auth.schema.Query, graphene.ObjectType):
+    node = relay.Node.Field()
+    debug = graphene.Field(DjangoDebug, name='__debug')
+
+
+class Mutation(graphene.ObjectType):
+    register_user = graph_auth.schema.RegisterUser.Field()
+    login_user = graph_auth.schema.LoginUser.Field()
+    reset_password = graph_auth.schema.ResetPassword.Field()
+    update_user = graph_auth.schema.UpdateUser.Field()
+    debug = graphene.Field(DjangoDebug, name='__debug')
+
+
+auth_schema = graphene.Schema(query=Query, mutation=Mutation)

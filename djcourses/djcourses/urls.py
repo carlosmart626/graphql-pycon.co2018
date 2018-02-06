@@ -23,6 +23,8 @@ from django.views.decorators.csrf import csrf_exempt
 from graphql_ws.django_channels import GraphQLSubscriptionConsumer
 from channels.routing import route_class
 
+from .schema import auth_schema
+
 
 def graphiql(request):
     response = HttpResponse(content=render_graphiql())
@@ -32,7 +34,8 @@ def graphiql(request):
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^graphiql/', graphiql),
-    url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True)))
+    url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    url(r'^auth/$', csrf_exempt(GraphQLView.as_view(schema=auth_schema, graphiql=True))),
 ]
 
 
