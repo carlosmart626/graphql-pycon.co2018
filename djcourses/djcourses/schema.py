@@ -1,5 +1,4 @@
 import graphene
-import graph_auth.schema
 
 from graphene import relay
 from rx import Observable
@@ -11,6 +10,7 @@ from courses.schemas import CourseNode
 from profiles.schemas import ProfileNode, UserNode
 from profiles.mutations import UpdateProfile
 from courses.mutations import CreateCourse, UpdateCourse
+from .mutations import LoginUser
 
 
 class Query(graphene.ObjectType):
@@ -56,17 +56,17 @@ class Subscription(graphene.ObjectType):
 schema = graphene.Schema(query=Query, mutation=Mutations, subscription=Subscription)
 
 
-class Query(graph_auth.schema.Query, graphene.ObjectType):
-    node = relay.Node.Field()
+class Query(graphene.ObjectType):
     debug = graphene.Field(DjangoDebug, name='__debug')
+    me = graphene.Field(UserNode)
+    
+    def resolve_me(self, info):
+        print(info.context.user)
+        return UserNode.get_node(info, info.context.user.id)
 
 
 class Mutation(graphene.ObjectType):
-    register_user = graph_auth.schema.RegisterUser.Field()
-    login_user = graph_auth.schema.LoginUser.Field()
-    reset_password = graph_auth.schema.ResetPassword.Field()
-    update_user = graph_auth.schema.UpdateUser.Field()
-    debug = graphene.Field(DjangoDebug, name='__debug')
+    login_user = LoginUser.Field()
 
 
 auth_schema = graphene.Schema(query=Query, mutation=Mutation)

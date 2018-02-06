@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^graphiql/', graphiql),
     url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    url(r'^auth/$', csrf_exempt(GraphQLView.as_view(schema=auth_schema, graphiql=True))),
+    url(r'^auth/', csrf_exempt(GraphQLView.as_view(schema=auth_schema, graphiql=True))),
 ]
 
 

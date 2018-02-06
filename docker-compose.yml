@@ -6,7 +6,7 @@ services:
     container_name: djcourses
     build: ./djcourses
     ports:
-      - 8000:8000
+      - 8080:8080
     volumes:
       - ./djcourses:/code/
     links:

@@ -130,7 +130,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": [("redis", 6379)],
         },
         "ROUTING": "djcourses.urls.channel_routing",
     },
@@ -145,6 +145,17 @@ GRAPHENE = {
 GRAPH_AUTH = {
     'USER_FIELDS': ('email', 'first_name', 'last_name', 'username',),
     'ONLY_ADMIN_REGISTRATION': True,  # Only alow admins to register new users
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
 
 JWT_AUTH = {

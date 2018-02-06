@@ -7,13 +7,14 @@ Automat==0.6.0
 channels==1.1.8
 constantly==15.1.0
 daphne==1.4.2
+Django==2.0.2
 django-filter==1.1.0
 django-jwt-auth==0.0.2
-Django==2.0.2
-git+https://github.com/CarlosMart626/graphql-ws.git@master#egg=graphql-ws
-git+https://github.com/CarlosMart626/django-graph-auth.git@master#egg=django-graph-auth
-graphene-django==2.0.0
+django-mail-templated==2.6.5
+djangorestframework==3.7.7
+djangorestframework-jwt==1.11.0
 graphene==2.0.1
+graphene-django==2.0.0
 graphql-core==2.0
 graphql-relay==0.4.5
 hyperlink==17.3.1
@@ -24,6 +25,7 @@ lazy-object-proxy==1.3.1
 mccabe==0.6.1
 msgpack-python==0.5.1
 promise==2.1
+PyJWT==1.5.3
 pylint==1.8.1
 pytz==2017.3
 redis==2.10.6
@@ -35,3 +37,4 @@ txaio==2.8.2
 typing==3.6.2
 wrapt==1.10.11
 zope.interface==4.4.3
+git+https://github.com/CarlosMart626/graphql-ws.git@master#egg=graphql-ws
