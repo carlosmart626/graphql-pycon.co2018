@@ -8,9 +8,8 @@ from graphene_django.debug import DjangoDebug
 
 from courses.schemas import CourseNode
 from profiles.schemas import ProfileNode, UserNode
-from profiles.mutations import UpdateProfile
+from profiles.mutations import UpdateProfile, LoginUser
 from courses.mutations import CreateCourse, UpdateCourse
-from .mutations import LoginUser
 
 
 class Query(graphene.ObjectType):
@@ -20,6 +19,13 @@ class Query(graphene.ObjectType):
 
     course = relay.Node.Field(CourseNode)
     courses = DjangoFilterConnectionField(CourseNode)
+
+    me = graphene.Field(UserNode)
+
+    debug = graphene.Field(DjangoDebug, name='__debug')
+
+    def resolve_me(self, info):
+        return UserNode.get_node(info, info.context.user.id)
 
     def resolve_hello(self, info, **kwargs):
         return 'world'
@@ -56,17 +62,12 @@ class Subscription(graphene.ObjectType):
 schema = graphene.Schema(query=Query, mutation=Mutations, subscription=Subscription)
 
 
-class Query(graphene.ObjectType):
-    debug = graphene.Field(DjangoDebug, name='__debug')
-    me = graphene.Field(UserNode)
-    
-    def resolve_me(self, info):
-        print(info.context.user)
-        return UserNode.get_node(info, info.context.user.id)
+class AuthQuery(graphene.ObjectType):
+    node = relay.Node.Field()
 
 
-class Mutation(graphene.ObjectType):
+class AuthMutation(graphene.ObjectType):
     login_user = LoginUser.Field()
 
 
-auth_schema = graphene.Schema(query=Query, mutation=Mutation)
+auth_schema = graphene.Schema(query=AuthQuery, mutation=AuthMutation)

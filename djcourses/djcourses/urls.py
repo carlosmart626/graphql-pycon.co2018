@@ -22,8 +22,9 @@ from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
 from graphql_ws.django_channels import GraphQLSubscriptionConsumer
 from channels.routing import route_class
+from jwt_auth.mixins import JSONWebTokenAuthMixin
 
-from .schema import auth_schema
+from .schema import auth_schema, schema
 
 
 def graphiql(request):
@@ -31,11 +32,16 @@ def graphiql(request):
     return response
 
 
+class AuthGraphQLView(JSONWebTokenAuthMixin, GraphQLView):
+    pass
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^graphiql/', graphiql),
+    url(r'^graphiql', graphiql),
     url(r'^graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    url(r'^auth/', csrf_exempt(GraphQLView.as_view(schema=auth_schema, graphiql=True))),
+    url(r'^protected', csrf_exempt(AuthGraphQLView.as_view(schema=schema, graphiql=True))),
+    url(r'^auth', csrf_exempt(GraphQLView.as_view(schema=auth_schema, graphiql=True))),
 ]
 
 
