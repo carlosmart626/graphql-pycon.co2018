@@ -41,7 +41,7 @@ class Subscription(graphene.ObjectType):
 
     count_seconds = graphene.Int(up_to=graphene.Int())
     sub_user = graphene.Field(
-        UserNode, description='subscribe to updated product', username=graphene.String())
+        UserNode, description='subscribe to updated user', username=graphene.String())
 
     def resolve_count_seconds(root, info, up_to=5):
         return Observable.interval(1000)\
@@ -59,7 +59,10 @@ class Subscription(graphene.ObjectType):
             .share()
 
 
-schema = graphene.Schema(query=Query, mutation=Mutations, subscription=Subscription)
+schema = graphene.Schema(
+    query=Query,
+    mutation=Mutations,
+    subscription=Subscription)
 
 
 class AuthQuery(graphene.ObjectType):

@@ -31,9 +31,11 @@ class UserNode(DjangoObjectType):
             return None
 
     token = graphene.String()
+
     def resolve_token(self, info, **args):
-        if self.id != info.context.user.id and not getattr(self, 'is_current_user', False):
-            return None
+        if self.id != info.context.user.id and \
+            not getattr(self, 'is_current_user', False):
+                return None
 
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER

@@ -127,6 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CHANNELS_WS_PROTOCOLS = ["graphql-ws", ]
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
