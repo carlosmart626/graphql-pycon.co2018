@@ -7,7 +7,7 @@
 Graphql implementation example to show some of the features of [Graphene-Django](http://graphene-python.org).
 
 <p align="center">
-  <img src="https://s3.amazonaws.com/carlosmart.co/graphene-logo.png" style="width:250px;">
+  <img width="250" src="https://s3.amazonaws.com/carlosmart.co/graphene-logo.png">
 </p>
 
 This is an example of a **courses** platform allowing to create users and courses and to enroll into a desired course.
