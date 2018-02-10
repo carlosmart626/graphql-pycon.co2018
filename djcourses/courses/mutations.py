@@ -9,7 +9,7 @@ from .models import Course
 class CourseInput(graphene.InputObjectType):
     title = graphene.String(required=True)
     description = graphene.String()
-    teacher_username = graphene.Int(required=True)
+    teacher_id = graphene.Int(required=True)
     
 
 class CourseUpdateInput(CourseInput):
